@@ -87,6 +87,14 @@ Bullet.prototype = {
   }
 };
 
+var Invader = function(game, center) {
+  this.game = game;
+  this.size = { x: 15, y: 15 };
+  this.center = center;
+  this.patrolX = 0;
+  this.speedX = 0.3;
+};
+
 
 
   window.onload = function() {
