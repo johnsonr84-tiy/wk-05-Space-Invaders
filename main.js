@@ -110,7 +110,6 @@ Invader.prototype = {
       var bullet = new Bullet({ x: this.center.x, y: this.center.y + this.size.x * 2},
       { x: Math.random() - 0.5, y: 2 });
       this.game.addBody(bullet);
-
     }
   }
 };
