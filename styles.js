@@ -42,3 +42,26 @@
     addBody: function(body) {
       this.bodies.push(body);
     },
+
+    invadersBelow: function(invader) {
+      return this.bodies.filter(function(b) {
+        return b instanceof Invader && b.center.y > invader.center.y && b.center.x - invader.center.x < invader.size.x;
+      }).length > 0
+    }
+  };
+  var Player = function(game, gameSize) {
+    this.game = game;
+    this.size = { x: 15, y: 15 };
+    this.center = { x: gameSize.x / 2, y: gameSize.y -this.size.x};
+    this.keyboarder = new Keyboarder();
+  };
+
+
+
+
+
+
+  window.onload = function() {
+  new Game("screen");
+};
+})();
