@@ -18,3 +18,27 @@
 
     tick();
   };
+
+  Game.prototype = {
+    update: function() {
+      var bodies = this.bodies;
+      var notCollidingWithAnything = function(b1) {
+        return bodies.filter(function(b2) { return colliding(b1, b2); }).length === 0;
+      };
+
+      this.bodies = this.bodies.filter(notCollidingWithAnything);
+
+      for (var i = 0; i < this.bodies.length; i++) {
+        this.bodies[i].update();
+      }
+    },
+
+    draw: function(screen, gameSize) {
+      screen.clearRect(0, 0, gameSize.x, gameSize.y)
+      for (var i = 0; i < this.bodies.length; i++) {
+        drawRect(screen, this.bodies[i])
+      }
+    },
+    addBody: function(body) {
+      this.bodies.push(body);
+    },
