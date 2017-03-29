@@ -95,6 +95,23 @@ var Invader = function(game, center) {
   this.speedX = 0.3;
 };
 
+Invader.prototype = {
+  update: function() {
+    if (this.patrolX < 0 || this.patrolX > 40) {
+      this.speedX = -this.speedX;
+    }
+
+    this.center.x += this.speedX;
+    this.patrolX += this.speedX;
+
+    if (Math.random() > 0.995 && !this.game.invadersBelow(this)) {
+      var bullet = new Bullet({ x: this.center.x, y: this.center.y + this.size.x * 2},
+      { x: Math.random() - 0.5, y: 2 });
+      this.game.addBody(bullet);
+
+    }
+  }
+};
 
 
   window.onload = function() {
