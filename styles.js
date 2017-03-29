@@ -56,6 +56,22 @@
     this.keyboarder = new Keyboarder();
   };
 
+  Player.prototype = {
+      update: function() {
+        if (this.keyboarder.isDown(this.keyboarder.KEYS.LEFT)) {
+          this.center.x -= 2;
+        } else if (this.keyboarder.isDown(this.keyboarder.KEYS.RIGHT)) {
+          this.center.x += 2;
+        }
+
+        if (this.keyboarder.isDown(this.keyboarder.KEYS.SPACE)) {
+          var bullet = new Bullet({ x: this.center.x, y: this.center.y - this.size.x * 2}, { x: 0, y: -6 });
+          this.game.addBody(bullet);
+          this.game.shootSound.load();
+          this.game.shootSound.play();
+        }
+      }
+};
 
 
 
