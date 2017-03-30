@@ -1,7 +1,8 @@
+//Space Invaders game with some questions and notes//
 ;(function() {
   var Game = function(canvasId) {
     var canvas = document.getElementById(canvasId);
-    var screen = canvas.getContext('2d');
+    var screen = canvas.getContext('2d'); // does '2d' mean 2 dimensional?
     var gameSize = { x: canvas.width, y: canvas.height };
 
     this.bodies = createInvaders(this).concat(new Player(this, gameSize));
@@ -13,10 +14,10 @@
     var tick = function() {
       self.update();
       self.draw(screen, gameSize);
-      requestAnimationFrame(tick);
+      requestAnimationFrame(tick); //The browser runs this 60x/ sec.
     };
 
-    tick();
+    tick(); //tick runs game logic. however, what is game logic? lol
   };
 
   Game.prototype = {
@@ -34,7 +35,7 @@
     },
 
     draw: function(screen, gameSize) {
-      screen.clearRect(0, 0, gameSize.x, gameSize.y)
+      screen.clearRect(0, 0, gameSize.x, gameSize.y)//This clears player drawing
       for (var i = 0; i < this.bodies.length; i++) {
         drawRect(screen, this.bodies[i])
       }
@@ -49,6 +50,8 @@
       }).length > 0
     }
   };
+  //This sizes and positions the player on the canvas screen at the bottom
+  //Also I want to make the player style set to the rocket image in this project folder... damn it!
   var Player = function(game, gameSize) {
     this.game = game;
     this.size = { x: 15, y: 15 };
@@ -73,9 +76,9 @@
     }
   };
 
-
+//I am not understanding how to style the color of my bullet to limegreen. I need lime green bullets!!!
 var Bullet = function(center, velocity) {
-  this.size = { x: 3, y: 3 };
+  this.size = { x: 3, y: 3};
   this.center = center;
   this.velocity = velocity;
 };
@@ -84,10 +87,8 @@ Bullet.prototype = {
   update: function() {
     this.center.x += this.velocity.x;
     this.center.y += this.velocity.y;
-
   }
 };
-
 
 var Invader = function(game, center) {
   this.game = game;
@@ -96,10 +97,10 @@ var Invader = function(game, center) {
   this.patrolX = 0;
   this.speedX = 0.3;
 };
-
+//I made the patrolX range set to 330 to fill my screen canvas better
 Invader.prototype = {
   update: function() {
-    if (this.patrolX < 0 || this.patrolX > 40) {
+    if (this.patrolX < 0 || this.patrolX > 330) {
       this.speedX = -this.speedX;
     }
 
@@ -114,6 +115,7 @@ Invader.prototype = {
   }
 };
 
+//I want to style my invaders with the saucer png is my project folder
 var createInvaders = function(game) {
   var invaders = [];
   for (var i =0; i <24; i++) {
@@ -124,7 +126,7 @@ var createInvaders = function(game) {
   return invaders;
 };
 
-
+//The functions below define the keyboard state of up and down
   var drawRect = function(screen, body) {
     screen.fillRect(body.center.x - body.size.x / 2, body.center.y - body.size.y / 2, body.size.x, body.size.y);
   };
@@ -144,7 +146,7 @@ var createInvaders = function(game) {
       return keyState[keyCode] === true;
     };
 
-    this.KEYS = { LEFT: 37, RIGHT: 39, SPACE: 32}
+    this.KEYS = { LEFT: 37, RIGHT: 39, SPACE: 32} //Where/ why did she select numbers 37,39,32... Do keyboard keys have numerical value assignments?
   }
 
   var colliding = function(b1, b2) {
@@ -158,6 +160,7 @@ var createInvaders = function(game) {
     b1.center.y - b1.size.y / 2 > b2.center.y + b2.size.y /2) ;
   }
 
+// Before inserting my sound file shoot.wav the space key didn't function to shoot bullets, instead it just froze the game. Wonder why.
   var loadSound = function(url, callback) {
     var loaded = function() {
 
@@ -169,8 +172,10 @@ var createInvaders = function(game) {
     sound.addEventListener('canplaythrough', loaded);
     sound.load();
   };
-
+//Set up window.load function early on in constructing game frameworks
   window.onload = function() {
     new Game("screen");
   };
 })();
+
+//Final thoughts on programing the game. I really like how she codes and selects here word choices based off what she is 'actually wanting to do' and then writes the code for the actual code.
